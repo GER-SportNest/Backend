@@ -71,4 +71,5 @@ public interface IRepository<TEntity>
         CancellationToken cancellationToken = default);
     
     Task SaveChanges(CancellationToken cancellationToken = default);
+    Task<bool> Exist(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
 }

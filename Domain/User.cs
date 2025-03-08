@@ -1,8 +1,14 @@
 ﻿namespace Domain;
 
+/// <summary>
+/// Represents a user/member in the system.
+/// </summary>
 public class User
 {
-    public required Guid Id { get; set; }
-    public required string Firstname { get; set; }
-    public required string Lastname { get; set; }
+    public long Id { get; set; }
+    public required string DisplayName { get; set; }
+    public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
+
+    public List<UserClubMembership> UserClubMemberships { get; set; } = new();
 }

@@ -123,6 +123,7 @@ public class Repository<TEntity>: IRepository<TEntity>
         _dbSet.UpdateRange(entity);
     }
     
+
     public Task<int> Update(
         Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> setExpression, 
         Expression<Func<TEntity, bool>>? predicate = null, 
@@ -148,7 +149,12 @@ public class Repository<TEntity>: IRepository<TEntity>
         await _dbContext.SaveChangesAsync(cancellationToken);
         _dbContext.ChangeTracker.Clear();
     }
-    
+
+    public Task<bool> Exist(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
+    {
+        return _dbSet.AnyAsync(predicate, ct);
+    }
+
     private IQueryable<TResult> GetQuery<TResult>(
         Expression<Func<TEntity, bool>>? predicate = null, 
         Expression<Func<TEntity, TResult>>? selector = null)

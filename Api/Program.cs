@@ -1,5 +1,9 @@
+using System.Text;
 using Application;
 using Carter;
+using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +12,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCarter();
+builder.Services
+    .AddCarter()
+    .AddApplicationRegistration()
+    .AddInfrastructureRegistration(builder.Configuration);
 
-builder.Services.AddMediatR(
-    config => config.RegisterServicesFromAssemblies(
-        typeof(ApplicationRegistrationExtensions).Assembly
-    ));
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "SportNest",
+            ValidAudience = "SportNest",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Your-Secret-Key-Here"))
+        };
+    });
 
 var app = builder.Build();
 

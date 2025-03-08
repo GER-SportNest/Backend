@@ -1,4 +1,3 @@
-using DotNet.Testcontainers.Builders;
 using Testcontainers.PostgreSql;
 
 namespace Unit.Tests;

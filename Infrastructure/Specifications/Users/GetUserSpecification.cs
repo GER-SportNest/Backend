@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Domain;
 using Infrastructure.Repositories.Specification;
 
-namespace Application.Specifications.Users;
+namespace Infrastructure.Specifications.Users;
 
 public class GetUserSpecification : BaseSpecification<User>
 {

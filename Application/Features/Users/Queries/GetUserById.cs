@@ -7,7 +7,6 @@ using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace Application.Users.Queries;
@@ -53,15 +52,6 @@ public class GetUserEndpoint : ICarterModule
         })
             .Produces<UserDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            //.RequireAuthorization()
-            /*
-            .RequireAuthorization(t => t.RequireAuthenticatedUser().RequireAssertion(a =>
-            {
-                using var scope = _serviceProvider.CreateScope();
-                var auth = scope.ServiceProvider.GetRequiredService<IAuth>();
-                return auth.IsAdmin;
-            }))
-             */
             .WithDescription("Get User based on authorization")
             .WithTags("User")
             .WithOpenApi();
