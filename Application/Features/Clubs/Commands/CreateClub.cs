@@ -1,26 +1,22 @@
-using Application.Clubs.DTOs;
-using Application.Repositories;
 using Carter;
 using FluentValidation;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using SportNest.Application.Features.Clubs.DTOs;
+using SportNest.Application.Repositories;
+using SportNest.Domain;
 
-namespace Application.Clubs.Commands;
+namespace SportNest.Application.Features.Clubs.Commands;
 
 public static class CreateClub
 {
     public const string Endpoint = "api/clubs/create";
 
-    public class CreateClubCommand : IRequest<ClubDto>
-    {
-        public string Name { get; set; } = default!;
-        public string? Description { get; set; }
-    }
+    public record CreateClubCommand(string Name, string? Description) : IRequest<ClubDto>;
 
     public class Validator : AbstractValidator<CreateClubCommand>
     {

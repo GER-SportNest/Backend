@@ -1,8 +1,8 @@
-using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SportNest.Domain;
 
-namespace Infrastructure.Configurations;
+namespace SportNest.Infrastructure.Configurations;
 
 public class DepartmentKPIConfiguration : IEntityTypeConfiguration<DepartmentKPI>
 {

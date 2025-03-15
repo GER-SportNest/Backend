@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// Documents a user's attendance (yes/no) at a training session.

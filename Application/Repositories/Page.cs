@@ -1,4 +1,4 @@
-namespace Application.Repositories;
+namespace SportNest.Application.Repositories;
 
 public class Page<T>
 {

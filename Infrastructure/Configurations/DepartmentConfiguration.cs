@@ -1,8 +1,8 @@
-using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SportNest.Domain;
 
-namespace Infrastructure.Configurations;
+namespace SportNest.Infrastructure.Configurations;
 
 public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 {
@@ -24,5 +24,10 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
         builder.HasMany(d => d.Options)
             .WithOne(o => o.Department)
             .HasForeignKey(o => o.DepartmentId);
+        
+        builder.HasMany(x => x.ClubPermissions)
+            .WithOne(mr => mr.Department)
+            .HasForeignKey(mr => mr.DepartmentId)
+            .IsRequired(false);
     }
 }

@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using Domain;
-using Infrastructure.Repositories.Specification;
+using SportNest.Application.Repositories;
+using SportNest.Domain;
 
-namespace Infrastructure.Specifications.Users;
+namespace SportNest.Infrastructure.Specifications.Users;
 
 public class GetUserSpecification : BaseSpecification<User>
 {

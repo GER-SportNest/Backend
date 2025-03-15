@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// A department within a club (e.g., a volleyball or handball department).
@@ -12,7 +12,8 @@ public class Department
     public long ClubId { get; set; }
     public Club Club { get; set; }
 
-    public List<Group> Groups { get; set; } = new();
-    public List<DepartmentKPI> DepartmentKPIs { get; set; } = new();
-    public List<Option> Options { get; set; } = new();
+    public List<Group> Groups { get; set; } = [];
+    public List<DepartmentKPI> DepartmentKPIs { get; set; } = [];
+    public List<Option> Options { get; set; } = [];
+    public List<ClubPermission> ClubPermissions { get; set; } = [];
 }

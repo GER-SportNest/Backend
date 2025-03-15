@@ -1,28 +1,23 @@
-using Application.Common;
-using Application.Common.Extensions;
-using Application.Repositories;
-using Application.Users.DTOs;
 using Carter;
-using Domain;
 using FluentValidation;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using SportNest.Application.Common;
+using SportNest.Application.Common.Extensions;
+using SportNest.Application.Features.Users.DTOs;
+using SportNest.Application.Repositories;
+using SportNest.Domain;
 
-namespace Application.Users.Commands;
+namespace SportNest.Application.Features.Users.Commands;
 
 public static class RegisterUser
 {
     public const string Endpoint = "api/users/register";
 
-    public class RegisterUserCommand : IRequest<Result<UserDto>>
-    {
-        public string DisplayName { get; set; } = default!;
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-    }
+    public record RegisterUserCommand(string DisplayName, string? Email, string? PhoneNumber) : IRequest<Result<UserDto>>;
 
     private class Validator : AbstractValidator<RegisterUserCommand>
     {

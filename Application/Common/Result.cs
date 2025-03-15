@@ -1,4 +1,4 @@
-namespace Application.Common;
+namespace SportNest.Application.Common;
 
 public enum ResultStatus
 {

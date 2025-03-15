@@ -1,9 +1,4 @@
-using Application.Clubs.DTOs;
-using Application.Common;
-using Application.Common.Extensions;
-using Application.Repositories;
 using Carter;
-using Domain;
 using FluentValidation;
 using Mapster;
 using MediatR;
@@ -11,19 +6,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using SportNest.Application.Common;
+using SportNest.Application.Common.Extensions;
+using SportNest.Application.Features.ClubRoles.DTOs;
+using SportNest.Application.Repositories;
+using SportNest.Domain;
 
-namespace Application.ClubRoles.Commands;
+namespace SportNest.Application.Features.ClubRoles.Commands;
 
 public static class CreateClubRole
 {
     public const string Endpoint = "api/clubs/{clubId:long}/roles";
 
-    public class CreateClubRoleCommand : IRequest<Result<ClubRoleDto>>
-    {
-        public long ClubId { get; set; }
-        public string RoleName { get; set; } = default!;
-        public string? Permissions { get; set; }
-    }
+    public record CreateClubRoleCommand(long ClubId, string RoleName, string? Permissions)
+        : IRequest<Result<ClubRoleDto>>;
 
     public class Validator : AbstractValidator<CreateClubRoleCommand>
     {
@@ -34,16 +30,24 @@ public static class CreateClubRole
         }
     }
 
-    internal sealed class Handler : IRequestHandler<CreateClubRoleCommand, Result<ClubRoleDto>>
+    internal sealed class Handler (
+        IRepository<Club> clubRepository,
+        IRepository<ClubRole> clubRoleRepository)
+        : IRequestHandler<CreateClubRoleCommand, Result<ClubRoleDto>>
     {
-        private readonly IRepository<ClubRole> _repo;
-
-        public Handler(IRepository<ClubRole> repo) => _repo = repo;
 
         public async Task<Result<ClubRoleDto>> Handle(CreateClubRoleCommand request, CancellationToken ct)
         {
-            // Optional: check if the club actually exists, or if role name is unique
-            // For now, we assume the club is valid.
+            var doesClubExist = !await clubRepository.Exist(x => x.Id == request.ClubId, ct);
+            if(doesClubExist)
+                return Result<ClubRoleDto>.Failure(ErrorResults.ClubDoesNotExist);
+
+            var doesClubRoleAlreadyExist = await clubRoleRepository.Exist(x => x.RoleName == request.RoleName
+                                                            && x.ClubId == request.ClubId, 
+                ct);
+            
+            if(doesClubRoleAlreadyExist)
+                return Result<ClubRoleDto>.Failure(ErrorResults.ClubRoleAlreadyExists);
 
             var role = new ClubRole
             {
@@ -52,8 +56,8 @@ public static class CreateClubRole
                 PermissionsJson = request.Permissions
             };
 
-            await _repo.Add(role);
-            await _repo.SaveChanges(ct);
+            await clubRoleRepository.Add(role);
+            await clubRoleRepository.SaveChanges(ct);
 
             return Result<ClubRoleDto>.Success(role.Adapt<ClubRoleDto>());
         }
@@ -66,8 +70,7 @@ public class CreateClubRoleEndpoint : ICarterModule
     {
         app.MapPost(CreateClubRole.Endpoint, async (long clubId, [FromBody] CreateClubRole.CreateClubRoleCommand cmd, ISender sender) =>
             {
-                cmd.ClubId = clubId; // from route
-                var result = await sender.Send(cmd);
+                var result = await sender.Send(cmd with { ClubId = clubId});
                 return result.ToHttpResult();
             })
             .WithName("CreateClubRole")

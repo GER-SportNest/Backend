@@ -1,8 +1,3 @@
-namespace Application.Users.DTOs;
+namespace SportNest.Application.Features.Users.DTOs;
 
-public class UserDto
-{
-    public required Guid Id { get; set; }
-    public required string Firstname { get; set; }
-    public required string Lastname { get; set; }
-}
+public record UserDto(long Id, string Firstname, string Lastname);

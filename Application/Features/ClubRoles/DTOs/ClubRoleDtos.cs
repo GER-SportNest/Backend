@@ -1,8 +1,3 @@
-namespace Application.Clubs.DTOs;
+namespace SportNest.Application.Features.ClubRoles.DTOs;
 
-public class ClubRoleDto
-{
-    public Guid Id { get; set; }
-    public Guid ClubId { get; set; }
-    public string RoleName { get; set; } = default!;
-}
+public record ClubRoleDto(long Id, long ClubId, string RoleName);

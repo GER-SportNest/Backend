@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 public class MembershipRole
 {

@@ -1,7 +1,8 @@
-using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SportNest.Infrastructure.Repositories;
+using SportNest.Infrastructure.Repositories.Extensions;
 using Xunit.Abstractions;
 
 namespace Unit.Tests.RepositoryTests.Base;

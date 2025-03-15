@@ -1,10 +1,10 @@
 using System.Linq.Expressions;
-using Application.Repositories;
-using Infrastructure.Repositories.Specification;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using SportNest.Application.Repositories;
+using SportNest.Infrastructure.Repositories.Specification;
 
-namespace Infrastructure.Repositories;
+namespace SportNest.Infrastructure.Repositories;
 
 public class Repository<TEntity>: IRepository<TEntity>
     where TEntity : class

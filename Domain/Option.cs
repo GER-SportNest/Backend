@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// Enum to distinguish whether an Option belongs to a Club, Department, or Group.

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace SportNest.Infrastructure.Repositories;
 
 public interface IDbContextResolver
 {

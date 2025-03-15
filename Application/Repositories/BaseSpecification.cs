@@ -1,8 +1,7 @@
 using System.Linq.Expressions;
-using Application.Repositories;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace Infrastructure.Repositories.Specification;
+namespace SportNest.Application.Repositories;
 
 public class BaseSpecification<T> : ISpecification<T>
 {

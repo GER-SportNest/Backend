@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// A group or team within a department.
@@ -12,7 +12,8 @@ public class Group
     public long DepartmentId { get; set; }
     public Department Department { get; set; }
 
-    public List<TrainingSession> TrainingSessions { get; set; } = new();
-    public List<GroupKPI> GroupKPIs { get; set; } = new();
-    public List<Option> Options { get; set; } = new();
+    public List<TrainingSession> TrainingSessions { get; set; } = [];
+    public List<GroupKPI> GroupKPIs { get; set; } = [];
+    public List<Option> Options { get; set; } = [];
+    public List<ClubPermission> ClubPermissions { get; set; } = [];
 }

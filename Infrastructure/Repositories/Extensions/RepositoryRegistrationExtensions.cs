@@ -1,9 +1,9 @@
-using Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SportNest.Application.Repositories;
 
-namespace Infrastructure.Repositories;
+namespace SportNest.Infrastructure.Repositories.Extensions;
 
 public static class RepositoryRegistrationExtensions
 {

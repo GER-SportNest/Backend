@@ -1,6 +1,6 @@
-using Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SportNest.Application.Repositories;
 using Unit.Tests.RepositoryTests.Base;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
 using Xunit.Abstractions;

@@ -1,8 +1,8 @@
-using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SportNest.Domain;
 
-namespace Infrastructure.Configurations;
+namespace SportNest.Infrastructure.Configurations;
 
 public class ClubConfiguration : IEntityTypeConfiguration<Club>
 {
@@ -13,8 +13,7 @@ public class ClubConfiguration : IEntityTypeConfiguration<Club>
         builder.Property(c => c.Name)
             .IsRequired();
 
-        builder.Property(c => c.CreatedAt)
-            .HasDefaultValueSql("GETUTCDATE()");
+        builder.Property(c => c.CreatedAt);
 
         builder.HasMany(c => c.Departments)
             .WithOne(d => d.Club)

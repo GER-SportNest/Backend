@@ -1,5 +1,5 @@
-using Application.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using SportNest.Application.Repositories;
 using Unit.Tests.RepositoryTests.Base;
 using Xunit.Abstractions;
 

@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// A training session that belongs to a specific group.
@@ -12,5 +12,5 @@ public class TrainingSession
     public long GroupId { get; set; }
     public Group Group { get; set; }
 
-    public List<Attendance> Attendances { get; set; } = new();
+    public List<Attendance> Attendances { get; set; } = [];
 }

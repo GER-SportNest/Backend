@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace Application.Repositories;
+namespace SportNest.Application.Repositories;
 
 public interface ISpecification<T>
 {

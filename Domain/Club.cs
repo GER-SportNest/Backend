@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// Represents a club (sports club) that contains multiple departments.
@@ -10,7 +10,7 @@ public class Club
     public string? Description { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public List<Department> Departments { get; set; } = new();
-    public List<UserClubMembership> Memberships { get; set; } = new();
-    public List<Option> Options { get; set; } = new();
+    public List<Department> Departments { get; set; } = [];
+    public List<UserClubMembership> Memberships { get; set; } = [];
+    public List<Option> Options { get; set; } = [];
 }

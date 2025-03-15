@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 public class ClubRole
 {
@@ -15,5 +15,6 @@ public class ClubRole
     public string? PermissionsJson { get; set; }
 
     // Navigation to bridging table
-    public List<MembershipRole> MembershipRoles { get; set; } = new();
+    public List<MembershipRole> MembershipRoles { get; set; } = [];
+    public List<ClubPermission> ClubPermissions { get; set; } = [];
 }

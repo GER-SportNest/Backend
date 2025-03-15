@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// M:N relationship between a user and a club, with a role (e.g., "Member", "Trainer") 
@@ -14,5 +14,5 @@ public class UserClubMembership
     public long ClubId { get; set; }
     public Club Club { get; set; }
 
-    public List<MembershipRole> MembershipRoles { get; set; } = new();
+    public List<MembershipRole> MembershipRoles { get; set; } = [];
 }

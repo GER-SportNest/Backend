@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Application.Common.Extensions;
+namespace SportNest.Application.Common.Extensions;
 
 public static class ResultExtensions
 {

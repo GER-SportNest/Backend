@@ -1,17 +1,17 @@
-using Application.Clubs.DTOs;
-using Application.Common;
-using Application.Common.Extensions;
-using Application.Repositories;
 using Carter;
-using Domain;
 using FluentValidation;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using SportNest.Application.Common;
+using SportNest.Application.Common.Extensions;
+using SportNest.Application.Features.ClubRoles.DTOs;
+using SportNest.Application.Repositories;
+using SportNest.Domain;
 
-namespace Application.Clubs.Queries;
+namespace SportNest.Application.Features.ClubRoles.Queries;
 
 public static class GetClubRoles
 {

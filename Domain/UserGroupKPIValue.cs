@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// Stores the actual KPI value for a given user and a specific GroupKPI.

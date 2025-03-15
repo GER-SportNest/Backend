@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// Defines a KPI at the department level. Groups in this department can decide 
@@ -14,5 +14,5 @@ public class DepartmentKPI
     public string Name { get; set; }
     public string? Description { get; set; }
 
-    public List<GroupKPI> GroupKPIs { get; set; } = new();
+    public List<GroupKPI> GroupKPIs { get; set; } = [];
 }

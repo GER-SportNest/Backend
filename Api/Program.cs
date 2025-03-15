@@ -1,9 +1,9 @@
 using System.Text;
-using Application;
 using Carter;
-using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SportNest.Application.Extensions;
+using SportNest.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

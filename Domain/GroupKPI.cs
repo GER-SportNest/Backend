@@ -1,4 +1,4 @@
-namespace Domain;
+namespace SportNest.Domain;
 
 /// <summary>
 /// A KPI that a group actually uses. It can point to a DepartmentKPI (if inherited) 
@@ -17,5 +17,5 @@ public class GroupKPI
     public string Name { get; set; }
     public string? Description { get; set; }
 
-    public List<UserGroupKPIValue> UserGroupKPIValues { get; set; } = new();
+    public List<UserGroupKPIValue> UserGroupKPIValues { get; set; } = [];
 }

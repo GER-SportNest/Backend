@@ -1,4 +1,4 @@
-﻿namespace Domain;
+﻿namespace SportNest.Domain;
 
 /// <summary>
 /// Represents a user/member in the system.
@@ -10,5 +10,5 @@ public class User
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
 
-    public List<UserClubMembership> UserClubMemberships { get; set; } = new();
+    public List<UserClubMembership> UserClubMemberships { get; set; } = [];
 }

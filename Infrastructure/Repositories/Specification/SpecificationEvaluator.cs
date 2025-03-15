@@ -1,6 +1,6 @@
-using Application.Repositories;
+using SportNest.Application.Repositories;
 
-namespace Infrastructure.Repositories.Specification;
+namespace SportNest.Infrastructure.Repositories.Specification;
 
 public static class SpecificationEvaluator<T> where T : class
 {

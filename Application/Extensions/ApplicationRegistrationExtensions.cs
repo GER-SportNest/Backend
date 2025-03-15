@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace SportNest.Application.Extensions;
 
 public static class ApplicationRegistrationExtensions
 {

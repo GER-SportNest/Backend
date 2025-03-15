@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Infrastructure;
+namespace SportNest.Infrastructure;
 
 public class ApplicationDbContext : DbContext
 {
@@ -30,6 +30,14 @@ public class ApplicationDbContext : DbContext
             idProperty.SetColumnType("bigint");
             idProperty.ValueGenerated = ValueGenerated.OnAdd;
             idProperty.SetBeforeSaveBehavior(PropertySaveBehavior.Throw);
+            
+            foreach (var property in entityType.GetProperties())
+            {
+                if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                {
+                    property.SetDefaultValueSql("now() AT TIME ZONE 'UTC'");
+                }
+            }
         }
     }
 }
