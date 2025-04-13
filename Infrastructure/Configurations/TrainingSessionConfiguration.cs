@@ -8,14 +8,11 @@ public class TrainingSessionConfiguration : IEntityTypeConfiguration<TrainingSes
 {
     public void Configure(EntityTypeBuilder<TrainingSession> builder)
     {
-        builder.HasKey(t => t.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.HasOne(t => t.Group)
-            .WithMany(g => g.TrainingSessions)
-            .HasForeignKey(t => t.GroupId);
-
-        builder.HasMany(t => t.Attendances)
-            .WithOne(a => a.TrainingSession)
-            .HasForeignKey(a => a.TrainingSessionId);
+        builder.HasOne(x => x.Group)
+            .WithMany(x => x.TrainingSessions)
+            .HasForeignKey(x => x.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

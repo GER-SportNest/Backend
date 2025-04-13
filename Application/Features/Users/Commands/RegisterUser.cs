@@ -41,7 +41,7 @@ public static class RegisterUser
             
             if (request.Email is not null)
             {
-                var emailExists = await _repo.Exist(u => u.Email == request.Email, ct);
+                var emailExists = await _repo.Exist(x => x.Email == request.Email, ct);
                 if (emailExists)
                 {
                     return Result<UserDto>.Failure("Email already in use.", ResultStatus.Conflict);
@@ -50,7 +50,7 @@ public static class RegisterUser
 
             if (request.PhoneNumber is not null)
             {
-                var phoneExists = await _repo.Exist(u => u.PhoneNumber == request.PhoneNumber, ct);
+                var phoneExists = await _repo.Exist(x => x.PhoneNumber == request.PhoneNumber, ct);
                 if (phoneExists)
                 {
                     return Result<UserDto>.Failure("PhoneNumber already in use.", ResultStatus.Conflict);
@@ -64,7 +64,7 @@ public static class RegisterUser
             };
             await _repo.Add(user);
             await _repo.SaveChanges(ct);
-            return Result<UserDto>.Success(user.Adapt<UserDto>());
+            return Result<UserDto>.Success(user);
         }
     }
 }

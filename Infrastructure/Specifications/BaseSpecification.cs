@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
+using SportNest.Application.Repositories;
 
-namespace SportNest.Application.Repositories;
+namespace SportNest.Infrastructure.Specifications;
 
-public class BaseSpecification<T> : ISpecification<T>
+public class BaseSpecification<T>(IRepository<T> repository)  : ISpecification<T> where T : class
 {
     public Expression<Func<T, bool>>? Criteria { get; protected set; }
 
@@ -13,19 +14,19 @@ public class BaseSpecification<T> : ISpecification<T>
     public Expression<Func<T, object>>? OrderBy { get; private set; }
     public bool? OrderAscending { get; private set; }
 
-    protected BaseSpecification()
-    {
-    }
-
     public Func<IQueryable<T>, IIncludableQueryable<T, object>>[] GetIncludes()
     {
         return IncludeExpressions.ToArray();
     }
 
-
-    public static BaseSpecification<T> Create()
+    public async Task<List<T>> Execute(CancellationToken cancellationToken = default)
     {
-        return new BaseSpecification<T>();
+        return await repository.QueryBySpecification(this, cancellationToken);
+    }
+    
+    public async Task<Page<T>> ExecutePaged(int page = 1, int size = 50, CancellationToken cancellationToken = default)
+    {
+        return await repository.QueryBySpecificationPaged(this, page, size, cancellationToken);
     }
 
     protected void AddInclude(Func<IQueryable<T>, IIncludableQueryable<T, object>> includeExpression)
@@ -33,13 +34,13 @@ public class BaseSpecification<T> : ISpecification<T>
         IncludeExpressions.Add(includeExpression);
     }
     
-    public BaseSpecification<T> ApplyCriteria(Expression<Func<T, bool>> criteria)
+    public ISpecification<T> ApplyCriteria(Expression<Func<T, bool>> criteria)
     {
         Criteria = criteria;
         return this;
     }
     
-    public BaseSpecification<T> ApplyOrder(
+    public ISpecification<T> ApplyOrder(
         bool isAscending, 
         Expression<Func<T, object>>? orderByExpression = null)
     {

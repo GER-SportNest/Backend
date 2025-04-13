@@ -38,7 +38,7 @@ public class UpdateTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
         );
         await userRepository.SaveChanges();
 
-        await userRepository.Update(u => u.SetProperty(x => x.Lastname, "Neu"), u => u.Lastname == "Alt");
+        await userRepository.Update(x => x.SetProperty(x => x.Lastname, "Neu"), x => x.Lastname == "Alt");
         await userRepository.SaveChanges();
 
         var result = await userRepository.ListAll();
@@ -62,8 +62,8 @@ public class UpdateTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
         await userRepository.SaveChanges();
 
         var updatedUsers = await userRepository.ListAll();
-        Assert.Contains(updatedUsers, u => u.Id == user1.Id && u.Firstname == "Maximilian");
-        Assert.Contains(updatedUsers, u => u.Id == user2.Id && u.Lastname == "Müller");
+        Assert.Contains(updatedUsers, x => x.Id == user1.Id && x.Firstname == "Maximilian");
+        Assert.Contains(updatedUsers, x => x.Id == user2.Id && x.Lastname == "Müller");
     }
 
     [Fact]
@@ -91,8 +91,8 @@ public class UpdateTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
         await userRepository.SaveChanges();
 
         await userRepository.Update(
-            u => u.SetProperty(x => x.Lastname, "Neu"),
-            u => u.Firstname == "NichtVorhanden"
+            x => x.SetProperty(x => x.Lastname, "Neu"),
+            x => x.Firstname == "NichtVorhanden"
         );
 
         var result = await userRepository.ListAll();
@@ -106,7 +106,7 @@ public class UpdateTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
 
         await Assert.ThrowsAsync<ArgumentNullException>(async () =>
         {
-            await userRepository.Update(null!, u => u.Lastname == "Alt");
+            await userRepository.Update(null!, x => x.Lastname == "Alt");
         });
     }
 }

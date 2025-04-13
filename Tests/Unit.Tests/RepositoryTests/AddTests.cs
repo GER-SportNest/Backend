@@ -54,8 +54,8 @@ public class AddTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutp
         var result = await userRepository.ListAll();
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
-        Assert.Contains(result, u => u.Id == expectedUser1.Id && u.Firstname == expectedUser1.Firstname && u.Lastname == expectedUser1.Lastname);
-        Assert.Contains(result, u => u.Id == expectedUser2.Id && u.Firstname == expectedUser2.Firstname && u.Lastname == expectedUser2.Lastname);
+        Assert.Contains(result, x => x.Id == expectedUser1.Id && x.Firstname == expectedUser1.Firstname && x.Lastname == expectedUser1.Lastname);
+        Assert.Contains(result, x => x.Id == expectedUser2.Id && x.Firstname == expectedUser2.Firstname && x.Lastname == expectedUser2.Lastname);
 
     }
     

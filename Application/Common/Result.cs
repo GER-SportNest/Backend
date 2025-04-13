@@ -1,3 +1,5 @@
+using Mapster;
+
 namespace SportNest.Application.Common;
 
 public enum ResultStatus
@@ -24,6 +26,9 @@ public class Result<T>
         ErrorMessage = error;
         Status = status;
     }
+    
+    public static Result<T> Success(object data) 
+        => new(true, data.Adapt<T>(), null, ResultStatus.Ok);
 
     public static Result<T> Success(T data) 
         => new(true, data, null, ResultStatus.Ok);

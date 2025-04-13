@@ -21,7 +21,7 @@ public class CountTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOu
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var count = await userRepository.Count(u => u.Firstname.Contains("a"));
+        var count = await userRepository.Count(x => x.Firstname.Contains("a"));
         Assert.Equal(2, count);
     }
     
@@ -42,7 +42,7 @@ public class CountTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOu
         await userRepository.Add(user1);
         await userRepository.SaveChanges();
 
-        var count = await userRepository.Count(u => u.Firstname == "Unbekannt");
+        var count = await userRepository.Count(x => x.Firstname == "Unbekannt");
         Assert.Equal(0, count);
     }
 
@@ -69,7 +69,7 @@ public class CountTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOu
         await userRepository.SaveChanges();
 
         // Hier wird die Projektion auf den Nachnamen gemacht, sollte die gleiche Anzahl liefern
-        var count = await userRepository.Count(_ => true, u => u.Lastname);
+        var count = await userRepository.Count(_ => true, x => x.Lastname);
         Assert.Equal(2, count);
     }
 }

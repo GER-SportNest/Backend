@@ -10,5 +10,6 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
+      <PackageReference Include="Npgsql" Version="9.0.2" />
     </ItemGroup>
 </Project>

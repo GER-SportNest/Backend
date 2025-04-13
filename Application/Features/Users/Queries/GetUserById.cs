@@ -21,7 +21,7 @@ public static class GetUser
     {
         public Validator()
         {
-            RuleFor(c => c.Id != default);
+            RuleFor(x => x.Id != default);
         }
     }
 

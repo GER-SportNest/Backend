@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SportNest.Application.Repositories;
+using SportNest.Infrastructure.Specifications;
 using Unit.Tests.RepositoryTests.Base;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
 using Xunit.Abstractions;
@@ -15,9 +16,9 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
 {
     class UserByFirstnameSpecification : BaseSpecification<User>
     {
-        public UserByFirstnameSpecification(string firstname)
+        public UserByFirstnameSpecification(IRepository<User> repository, string firstname) : base(repository)
         {
-            ApplyCriteria(u => u.Firstname == firstname);
+            ApplyCriteria(x => x.Firstname == firstname);
         }
     }
     
@@ -31,7 +32,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var spec = new UserByFirstnameSpecification("Anna");
+        var spec = new UserByFirstnameSpecification(userRepository, "Anna");
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Single(result);
@@ -43,7 +44,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
     {
         var userRepository = ServiceProvider.GetRequiredService<IRepository<User>>();
 
-        var spec = new UserByFirstnameSpecification("Unbekannt");
+        var spec = new UserByFirstnameSpecification(userRepository, "Unbekannt");
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Empty(result);
@@ -54,7 +55,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
     {
         var userRepository = ServiceProvider.GetRequiredService<IRepository<User>>();
 
-        var spec = new UserByFirstnameSpecification("Anna");
+        var spec = new UserByFirstnameSpecification(userRepository, "Anna");
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Empty(result);
@@ -62,9 +63,9 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
     
     class UsersOrderedByFirstnameSpecification : BaseSpecification<User>
     {
-        public UsersOrderedByFirstnameSpecification()
+        public UsersOrderedByFirstnameSpecification(IRepository<User> repository) : base(repository)
         {
-            ApplyOrder(true, u => u.Firstname);
+            ApplyOrder(true, x => x.Firstname);
         }
     }
 
@@ -77,7 +78,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var spec = new UsersOrderedByFirstnameSpecification();
+        var spec = new UsersOrderedByFirstnameSpecification(userRepository);
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Equal(2, result.Count);
@@ -87,9 +88,9 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
     
     class UsersOrderedByFirstnameDescendingSpecification : BaseSpecification<User>
     {
-        public UsersOrderedByFirstnameDescendingSpecification()
+        public UsersOrderedByFirstnameDescendingSpecification(IRepository<User> repository) : base(repository)
         {
-            ApplyOrder(false, u => u.Firstname);
+            ApplyOrder(false, x => x.Firstname);
         }
     }
 
@@ -102,7 +103,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var spec = new UsersOrderedByFirstnameDescendingSpecification();
+        var spec = new UsersOrderedByFirstnameDescendingSpecification(userRepository);
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Equal(2, result.Count);
@@ -112,9 +113,9 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
     
     class UserWithOrdersSpecification : BaseSpecification<User>
     {
-        public UserWithOrdersSpecification()
+        public UserWithOrdersSpecification(IRepository<User> repository) : base(repository)
         {
-            AddInclude(u => u.Include(x => x.Orders));
+            AddInclude(x => x.Include(x => x.Orders));
         }
     }
 
@@ -128,7 +129,7 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
         await userRepository.Add(user);
         await userRepository.SaveChanges();
 
-        var spec = new UserWithOrdersSpecification();
+        var spec = new UserWithOrdersSpecification(userRepository);
         var result = await userRepository.QueryBySpecification(spec);
 
         Assert.Single(result);
@@ -144,8 +145,8 @@ public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture 
         await userRepository.Add(user1);
         await userRepository.SaveChanges();
 
-        var spec = new UserByFirstnameSpecification("Anna");
-        var result = await userRepository.QueryBySpecification(spec, u => u.Firstname);
+        var spec = new UserByFirstnameSpecification(userRepository, "Anna");
+        var result = await userRepository.QueryBySpecification(spec, x => x.Firstname);
 
         Assert.Single(result);
         Assert.Equal("Anna", result.First());

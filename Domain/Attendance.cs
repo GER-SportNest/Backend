@@ -14,4 +14,5 @@ public class Attendance
     public User User { get; set; }
 
     public bool IsAttending { get; set; }
+    public string? Reason { get; set; }
 }

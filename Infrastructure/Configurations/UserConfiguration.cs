@@ -8,19 +8,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(u => u.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(u => u.Email)
+        builder.Property(x => x.Email)
             .HasMaxLength(255);
         
-        builder.HasIndex(u => u.Email)
+        builder.HasIndex(x => x.Email)
             .IsUnique();
         
-        builder.HasIndex(u => u.PhoneNumber)
+        builder.HasIndex(x => x.PhoneNumber)
             .IsUnique();
-
-        builder.HasMany(u => u.UserClubMemberships)
-            .WithOne(ucm => ucm.User)
-            .HasForeignKey(ucm => ucm.UserId);
     }
 }

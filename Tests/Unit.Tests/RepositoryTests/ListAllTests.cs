@@ -20,7 +20,7 @@ public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITest
         await userRepository.Add(user1);
         await userRepository.SaveChanges();
 
-        var result = await userRepository.ListAll(u => u.Firstname);
+        var result = await userRepository.ListAll(x => x.Firstname);
 
         Assert.Single(result);
         Assert.Contains("Anna", result);
@@ -38,8 +38,8 @@ public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITest
         var result = await userRepository.ListAll();
 
         Assert.Equal(2, result.Count);
-        Assert.Contains(result, u => u.Firstname == "Anna");
-        Assert.Contains(result, u => u.Firstname == "Max");
+        Assert.Contains(result, x => x.Firstname == "Anna");
+        Assert.Contains(result, x => x.Firstname == "Max");
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITest
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var result = await userRepository.ListAll(u => u.Firstname == "Anna", default);
+        var result = await userRepository.ListAll(x => x.Firstname == "Anna", default);
 
         Assert.Single(result);
         Assert.Equal("Anna", result.First().Firstname);
@@ -66,7 +66,7 @@ public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITest
         await userRepository.Add(user1, user2);
         await userRepository.SaveChanges();
 
-        var result = await userRepository.ListAll(u => u.Firstname, u => u.Firstname == "Anna");
+        var result = await userRepository.ListAll(x => x.Firstname, x => x.Firstname == "Anna");
 
         Assert.Single(result);
         Assert.Equal("Anna", result.First());
@@ -87,7 +87,7 @@ public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITest
     {
         var userRepository = ServiceProvider.GetRequiredService<IRepository<User>>();
 
-        var result = await userRepository.ListAll(u => u.Firstname);
+        var result = await userRepository.ListAll(x => x.Firstname);
 
         Assert.Empty(result);
     }

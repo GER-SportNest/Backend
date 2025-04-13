@@ -8,14 +8,16 @@ public class AttendanceConfiguration : IEntityTypeConfiguration<Attendance>
 {
     public void Configure(EntityTypeBuilder<Attendance> builder)
     {
-        builder.HasKey(a => a.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.HasOne(a => a.TrainingSession)
-            .WithMany(t => t.Attendances)
-            .HasForeignKey(a => a.TrainingSessionId);
+        builder.HasOne(x => x.TrainingSession)
+            .WithMany(x => x.Attendances)
+            .HasForeignKey(x => x.TrainingSessionId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(a => a.User)
-            .WithMany() // if you want a direct collection on User, add it
-            .HasForeignKey(a => a.UserId);
+        builder.HasOne(x => x.User)
+            .WithMany(x => x.Attendances)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

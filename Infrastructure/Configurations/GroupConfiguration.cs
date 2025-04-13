@@ -8,26 +8,14 @@ public class GroupConfiguration : IEntityTypeConfiguration<Group>
 {
     public void Configure(EntityTypeBuilder<Group> builder)
     {
-        builder.HasKey(g => g.Id);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(g => g.GroupName)
+        builder.Property(x => x.Name)
             .IsRequired();
-
-        builder.HasMany(g => g.TrainingSessions)
-            .WithOne(t => t.Group)
-            .HasForeignKey(t => t.GroupId);
-
-        builder.HasMany(g => g.GroupKPIs)
-            .WithOne(k => k.Group)
-            .HasForeignKey(k => k.GroupId);
-
-        builder.HasMany(g => g.Options)
-            .WithOne(o => o.Group)
-            .HasForeignKey(o => o.GroupId);
         
-        builder.HasMany(x => x.ClubPermissions)
-            .WithOne(mr => mr.Group)
-            .HasForeignKey(mr => mr.GroupId)
-            .IsRequired(false);
+        builder.HasOne(x => x.Sport)
+            .WithMany(x => x.Groups)
+            .HasForeignKey(x => x.SportId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

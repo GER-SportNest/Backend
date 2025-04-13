@@ -35,7 +35,7 @@ public class RemoveTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
         await userRepository.Add(user);
         await userRepository.SaveChanges();
 
-        await userRepository.Remove(u => u.Id == user.Id);
+        await userRepository.Remove(x => x.Id == user.Id);
 
         var result = await userRepository.ListAll();
         Assert.Empty(result);
@@ -81,7 +81,7 @@ public class RemoveTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestO
         await userRepository.Add(user1);
         await userRepository.SaveChanges();
 
-        await userRepository.Remove(u => u.Firstname == "NichtVorhanden");
+        await userRepository.Remove(x => x.Firstname == "NichtVorhanden");
         await userRepository.SaveChanges();
 
         var result = await userRepository.ListAll();
