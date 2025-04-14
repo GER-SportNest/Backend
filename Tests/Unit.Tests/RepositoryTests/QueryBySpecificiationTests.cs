@@ -4,15 +4,18 @@ using SportNest.Application.Repositories;
 using SportNest.Infrastructure.Specifications;
 using Unit.Tests.RepositoryTests.Base;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
-using Xunit.Abstractions;
+
 
 namespace Unit.Tests.RepositoryTests;
 
-[Trait("category", "automation_unit_tests")]
-[Trait("category", "repository_unit_tests")]
-[Collection(nameof(PostgreSqlRepositoryTestCollection))]
-public class QueryBySpecificiationTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutputHelper outputHelper) 
-    : RepositoryTestBase(nameof(QueryBySpecificiationTests), fixture, outputHelper)
+[Trait("category", ServiceTestCategories.UnitTests)]
+[Trait("category", ServiceTestCategories.RepositoryTests)]
+public class QueryBySpecificiationTests(
+    PostgreSqlRepositoryTestDatabaseFixture fixture,
+    ITestOutputHelper outputHelper,
+    string? prefix = "T",
+    Guid? dbId = null)
+    : RepositoryTestBase(fixture, outputHelper, prefix, dbId)
 {
     class UserByFirstnameSpecification : BaseSpecification<User>
     {

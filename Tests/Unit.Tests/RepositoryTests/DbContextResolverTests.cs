@@ -6,7 +6,14 @@ using Unit.Tests.RepositoryTests.Entities.EmployeeDb;
 
 namespace Unit.Tests.RepositoryTests;
 
-public class DbContextResolverTests
+[Trait("category", ServiceTestCategories.UnitTests)]
+[Trait("category", ServiceTestCategories.RepositoryTests)]
+public class DbContextResolverTests(
+PostgreSqlRepositoryTestDatabaseFixture fixture,
+    ITestOutputHelper outputHelper,
+string? prefix = "T",
+    Guid? dbId = null)
+    : RepositoryTestBase(fixture, outputHelper, prefix, dbId)
 {
     [Fact]
     public void Resolve_UserEntity_ReturnsUserTestDbContext()

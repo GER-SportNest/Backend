@@ -2,15 +2,18 @@ using Microsoft.Extensions.DependencyInjection;
 using SportNest.Application.Repositories;
 using Unit.Tests.RepositoryTests.Base;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
-using Xunit.Abstractions;
+
 
 namespace Unit.Tests.RepositoryTests;
 
-[Trait("category", "automation_unit_tests")]
-[Trait("category", "repository_unit_tests")]
-[Collection(nameof(PostgreSqlRepositoryTestCollection))]
-public class ListAllTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutputHelper outputHelper) 
-    : RepositoryTestBase(nameof(ListAllTests), fixture, outputHelper)
+[Trait("category", ServiceTestCategories.UnitTests)]
+[Trait("category", ServiceTestCategories.RepositoryTests)]
+public class ListAllTests(
+    PostgreSqlRepositoryTestDatabaseFixture fixture,
+    ITestOutputHelper outputHelper,
+    string? prefix = "T",
+    Guid? dbId = null)
+    : RepositoryTestBase(fixture, outputHelper, prefix, dbId)
 {
     [Fact]
     public async Task ListAll_WithSelector_ReturnsProjectedResult_Success()

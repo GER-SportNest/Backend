@@ -1,15 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using SportNest.Infrastructure;
 using Unit.Tests.RepositoryTests.Entities.EmployeeDb;
 
 namespace Unit.Tests.RepositoryTests.Base;
 
-public class EmployeeTestDbContext : DbContext
+public class EmployeeTestDbContext : DbBaseContext
 {
-    public EmployeeTestDbContext(DbContextOptions<EmployeeTestDbContext> options) : base(options)
-    {
-    }
-
-    protected EmployeeTestDbContext(DbContextOptions options) : base(options)
+    public EmployeeTestDbContext(DbContextOptions<EmployeeTestDbContext> options, string schema = "public") : base(options, schema)
     {
     }
     
@@ -21,8 +18,7 @@ public class EmployeeTestDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("employee_test");
-        
+      
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         base.OnModelCreating(modelBuilder);

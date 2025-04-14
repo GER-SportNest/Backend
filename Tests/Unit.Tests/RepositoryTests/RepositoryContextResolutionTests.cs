@@ -1,15 +1,18 @@
 using Microsoft.Extensions.DependencyInjection;
 using SportNest.Application.Repositories;
 using Unit.Tests.RepositoryTests.Base;
-using Xunit.Abstractions;
+
 
 namespace Unit.Tests.RepositoryTests;
 
-[Trait("category", "automation_unit_tests")]
-[Trait("category", "repository_unit_tests")]
-[Collection(nameof(PostgreSqlRepositoryTestCollection))]
-public class RepositoryContextResolutionTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutputHelper outputHelper)
-    : RepositoryTestBase(nameof(RepositoryContextResolutionTests), fixture, outputHelper)
+[Trait("category", ServiceTestCategories.UnitTests)]
+[Trait("category", ServiceTestCategories.RepositoryTests)]
+public class RepositoryContextResolutionTests(
+    PostgreSqlRepositoryTestDatabaseFixture fixture,
+    ITestOutputHelper outputHelper,
+    string? prefix = "T",
+    Guid? dbId = null)
+    : RepositoryTestBase(fixture, outputHelper, prefix, dbId)
 {
     [Fact]
     public async Task Repository_UserEntity_UsesUserTestDbContext()

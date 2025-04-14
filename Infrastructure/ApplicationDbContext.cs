@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SportNest.Infrastructure;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbBaseContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, string schema = "public") : base(options, schema)
     {
     }
 
@@ -39,5 +39,7 @@ public class ApplicationDbContext : DbContext
                 }
             }
         }
+        
+        base.OnModelCreating(modelBuilder);
     }
 }

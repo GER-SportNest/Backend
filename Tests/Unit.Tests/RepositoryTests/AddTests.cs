@@ -3,15 +3,18 @@ using Microsoft.Extensions.DependencyInjection;
 using SportNest.Application.Repositories;
 using Unit.Tests.RepositoryTests.Base;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
-using Xunit.Abstractions;
+
 
 namespace Unit.Tests.RepositoryTests;
 
-[Trait("category", "automation_unit_tests")]
-[Trait("category", "repository_unit_tests")]
-[Collection(nameof(PostgreSqlRepositoryTestCollection))]
-public class AddTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutputHelper outputHelper) 
-    : RepositoryTestBase(nameof(CountTests), fixture, outputHelper)
+[Trait("category", ServiceTestCategories.UnitTests)]
+[Trait("category", ServiceTestCategories.RepositoryTests)]
+public class AddTests(
+    PostgreSqlRepositoryTestDatabaseFixture fixture,
+    ITestOutputHelper outputHelper,
+    string? prefix = "T",
+    Guid? dbId = null)
+    : RepositoryTestBase(fixture, outputHelper, prefix, dbId)
 {
     [Fact]
     public async Task AddUsers_ReturnsAddedUserOnGetById_Success()
@@ -23,9 +26,9 @@ public class AddTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutp
             Firstname = "Max",
             Lastname = "Mustermann"
         };
-        userRepository.Add(expectedUser);
+        await userRepository.Add(expectedUser);
 
-        await userRepository.SaveChanges();
+        await userRepository.SaveChanges(TestContext.Current.CancellationToken);
         var result = await userRepository.GetById(expectedUser.Id);
         Assert.NotNull(result);
         Assert.Equal(expectedUser.Firstname, result.Firstname);
@@ -48,10 +51,10 @@ public class AddTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutp
             Firstname = "Luisa",
             Lastname = "Luftgitarre"
         };
-        userRepository.Add(expectedUser1, expectedUser2);
+        await userRepository.Add(expectedUser1, expectedUser2);
 
-        await userRepository.SaveChanges();
-        var result = await userRepository.ListAll();
+        await userRepository.SaveChanges(TestContext.Current.CancellationToken);
+        var result = await userRepository.ListAll(cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
         Assert.Contains(result, x => x.Id == expectedUser1.Id && x.Firstname == expectedUser1.Firstname && x.Lastname == expectedUser1.Lastname);
@@ -84,9 +87,9 @@ public class AddTests(PostgreSqlRepositoryTestDatabaseFixture fixture, ITestOutp
         var user2 = new User { Id = user1.Id, Firstname = "Luisa", Lastname = "Luftgitarre" };
 
         await userRepository.Add(user1);
-        await userRepository.SaveChanges();
+        await userRepository.SaveChanges(TestContext.Current.CancellationToken);
         await userRepository.Add(user2);
-        await Assert.ThrowsAsync<DbUpdateException>(() => userRepository.SaveChanges());
+        await Assert.ThrowsAsync<DbUpdateException>(() => userRepository.SaveChanges(TestContext.Current.CancellationToken));
     }
 
     private async Task<User> AddUser()

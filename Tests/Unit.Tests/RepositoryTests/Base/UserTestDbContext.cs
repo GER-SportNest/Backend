@@ -1,15 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using SportNest.Infrastructure;
 using Unit.Tests.RepositoryTests.Entities.UserDb;
 
 namespace Unit.Tests.RepositoryTests.Base;
 
-public class UserTestDbContext : DbContext
+public class UserTestDbContext : DbBaseContext
 {
-    public UserTestDbContext(DbContextOptions<UserTestDbContext> options) : base(options)
-    {
-    }
-
-    protected UserTestDbContext(DbContextOptions options) : base(options)
+    public UserTestDbContext(DbContextOptions<UserTestDbContext> options, string schema = "public") : base(options, schema)
     {
     }
     
@@ -22,8 +19,8 @@ public class UserTestDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("user_test");
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        base.OnModelCreating(modelBuilder);
     }
 }
