@@ -43,6 +43,4 @@ app.MapScalarApiReference();
 
 app.MapCarter();
 
-app.UseHttpsRedirection();
-
 app.Run();
