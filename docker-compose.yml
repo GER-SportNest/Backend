@@ -12,6 +12,21 @@ services:
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=postgresDB;Username=postgresUser;Password=postgresPW
     depends_on:
       - postgres
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.docker/config.json:/config.json
+    environment:
+      - DOCKER_CONFIG=/
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_LABEL_ENABLE=true
 
   postgres:
     image: postgres:16

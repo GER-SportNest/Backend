@@ -9,14 +9,14 @@ services:
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/Api.dll"
+    - "/app/bin/Debug/net9.0/Api.dll"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "api:dev"
     ports: []
     volumes:
-    - "C:\\Users\\Fabia\\.nuget\\packages:/home/app/.nuget/packages"
     - "C:\\Users\\Fabia\\RiderProjects\\Backend\\Api:/app:rw"
     - "C:\\Users\\Fabia\\RiderProjects\\Backend:/src:rw"
+    - "C:\\Users\\Fabia\\.nuget\\packages:/home/app/.nuget/packages"
     working_dir: "/app"
