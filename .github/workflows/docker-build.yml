@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/GER-SportNest/Sportnest_Backend:latest
+          tags: ghcr.io/ger-sportnest/sportnest-backend:latest
